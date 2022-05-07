@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Task 0"""
 import unittest
+import json
+from requests.models import Response
+from unittest.mock import patch
 from parameterized import parameterized
 from typing import Sequence, Mapping, Any
-access_nested_map = __import__('utils').access_nested_map
+from utils import *
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -16,3 +19,30 @@ class TestAccessNestedMap(unittest.TestCase):
                                expected: Any):
         """Test function"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
+
+    @parameterized.expand([({}, ("a",)),
+                           ({"a": 1}, ("a", "b"))
+                           ])
+    def test_access_nested_map_exception(self, nested_map: Mapping,
+                                         path: Sequence):
+        """Test KeyError"""
+        self.assertRaises(KeyError, access_nested_map, nested_map, path)
+
+
+class TestGetJson(unittest.TestCase):
+    """Class tests HTTP calls"""
+    @parameterized.expand([("http://example.com", {"payload": True}),
+                           ("http://holberton.io", {"payload": False})
+                           ])
+    def test_get_json(self, test_url: str, test_payload: Mapping):
+        """Mocking get_json"""
+        with patch('utils.requests') as mock_req:
+            response = Response()
+            if test_payload.get("payload") is True:
+                response._content = b'{"payload": true}'
+            else:
+                response._content = b'{"payload": false}'
+            mock_req.get.return_value = response
+            res = get_json(test_url)
+            mock_req.get.assert_called_once()
+            self.assertEqual(res, test_payload)
