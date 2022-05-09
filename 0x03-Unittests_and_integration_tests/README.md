@@ -16,7 +16,8 @@ Integration tests will test interactions between every part of your code.
 * [Memoization](https://en.wikipedia.org/wiki/Memoization)  
 * [Real Python - Python mock library](https://realpython.com/python-mock-library/)  
 * [Understanding parameterized](https://www.codestudyblog.com/cnb2001/0123221843.html) 
-* [Parameterized Python tests](https://kracekumar.com/post/618264170735009792/parameterize-python-tests/)
+* [Parameterized Python tests](https://kracekumar.com/post/618264170735009792/parameterize-python-tests/)   
+* [Class and Module Fixtures](https://docs.python.org/2/library/unittest.html#class-and-module-fixtures)  
 
 ## Tasks
 * Create `TestAccssNestedMap` class that inherits from `unittest.TestCase`.     Implement `TestAccessNestedMap.test_access_nested_map` method to test that the method returns what it is supposed to.
